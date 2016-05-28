@@ -1,0 +1,114 @@
+% Created 2014-04-30 Wed 16:33
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\author{Pascal Steger}
+\date{\today}
+\title{Generations in Bounded Confidence}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.5h)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+
+\section{Abstract}
+\label{sec-1}
+I investigate the evolution and stability of an
+agent based model for opinions in a group of agents with a
+finite lifetime.
+\section{Motivation}
+\label{sec-2}
+The bounded confidence model describes the way an ensemble of agents
+converges on a common opinion, or several final opinions.
+
+Effects that cannot be described with this model is long-time change
+of opinions, as is e.g. seen in human societies over several
+generations.
+
+One way to mitigate this problem is by including said generations in the
+model. I implement this idea by adding one additional internal
+parameter for an agent, its age.
+
+I propose as hypothesis that as old agents disappear to be
+replaced by young, unbiased agents, a shift in the overall opinion
+will occur. I will determine what model parameters have the most
+influence and how the timescale for a considerable shift of opinion
+compares to the lifetime of single agents.
+\section{Implementation}
+\label{sec-3}
+I model agents $i\in[1,N]$ with two internal parameters: an opinion
+$o_i$ and an age $a_i$.
+
+I use several sets of initial conditions:
+
+\begin{enumerate}
+\item consensus: All agents have a common opinion $o_i=c\in[0,1]\,\forall
+   i\in[1,N]$. The age is uniformly distributed. This setup enables us
+to determine the timescale after which a consensus is lost due to
+replacement of old agents with new agents having a uniform opinion
+distribution.
+
+\item uniform field: The opinions are uniformly distributed, and so are the
+ages. This setup serves to determine the criteria for consensus
+finding.
+\end{enumerate}
+
+
+I introduce a social distance $d$ between two agents encompassing
+opinions $o_i$, physical positions $x_i$ (2D on a lattice, or 3
+dimensional, or any appropriate social distance), age $a_i$. In each
+timestep, two random agents meet. They interact based on two possible
+rules:
+
+\begin{enumerate}
+\item if the distance between them is smaller than a parameter
+   $\varepsilon$ with a strength parameter $\zeta$.
+
+\item always, but the strength parameter is decreasing with increasing
+distance: $\zeta=\zeta_0/g$.
+\end{enumerate}
+
+The interaction is based on the bounded confidence model
+
+\begin{eqnarray}
+    o_i(t+1) &=& o_i(t)+\zeta\cdot(o_j(t)-o_i(t))\\
+    o_j(t+1) &=& o_j(t)+\zeta\cdot(o_i(t)-o_j(t))
+\end{eqnarray}
+
+\section{Preliminary Result}
+\label{sec-4}
+For the uniform field, and $\zeta=0.5$ with the distance-dependent
+interaction rule, I get the evolution shown below. We can see the
+initial convergence, and the appearance of new agents with time
+(vertical lines mark births). A second "opinion peak" is forming at
+timestep 800, with mostly young agents, but some old ones as well.
+\includegraphics[width=.9\linewidth]{/home/psteger/abm14/generations/generations.png}
+\section{Further Investigations}
+\label{sec-5}
+I will
+\begin{itemize}
+\item develop a metric to determine the number of concurrent stable opinions
+\item plot the timescale between new opinions as a function of mean lifetime of
+the agents divided by the frequency of new births
+\item run a simulation starting from a consesus and compare it with the analytic treatment
+\end{itemize}
+% Emacs 24.3.1 (Org mode 8.2.5h)
+\end{document}

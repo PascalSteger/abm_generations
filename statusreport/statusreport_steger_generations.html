@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<title>Generations in Bounded Confidence</title>
+<!-- 2014-04-30 Wed 17:00 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Pascal Steger" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.right  { text-align: center;  }
+  th.left   { text-align: center;   }
+  th.center { text-align: center; }
+  td.right  { text-align: right;  }
+  td.left   { text-align: left;   }
+  td.center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara:nth-child(2) { display: inline; }
+  .footpara { display: block; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Generations in Bounded Confidence</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">1. Abstract</a></li>
+<li><a href="#sec-2">2. Motivation</a></li>
+<li><a href="#sec-3">3. Implementation</a></li>
+<li><a href="#sec-4">4. Preliminary Result</a></li>
+<li><a href="#sec-5">5. Further Investigations</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1"><span class="section-number-2">1</span> Abstract</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I investigate the evolution and stability of an
+agent based model for opinions in a group of agents with a
+finite lifetime.
+</p>
+</div>
+</div>
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2"><span class="section-number-2">2</span> Motivation</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+The bounded confidence model describes the way an ensemble of agents
+converges on a common opinion, or several final opinions.
+Effects that cannot be described with this model is long-time change
+of opinions, as is e.g. seen in human societies over several
+generations.
+One way to mitigate this problem is by including said generations in the
+model. I implement this idea by adding one additional internal
+parameter for an agent, its age.
+I propose as hypothesis that as old agents disappear to be
+replaced by young, unbiased agents, a shift in the overall opinion
+will occur. I will determine what model parameters have the most
+influence and how the timescale for a considerable shift of opinion
+compares to the lifetime of single agents.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Implementation</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+I model agents <img src="ltxpng/statusreport_steger_generations_88a1625083e7e8fa630e3182ba00ab6b2d8971ba.png" alt="$i\in[1,N]$" /> with two internal parameters: an opinion
+<img src="ltxpng/statusreport_steger_generations_38891f64b68a211744fd511310b4a0ce4cc99122.png" alt="$o_i$" /> and an age <img src="ltxpng/statusreport_steger_generations_2eb7e9676e8866e4949ec0953c964a00881456fd.png" alt="$a_i$" />.
+I use several sets of initial conditions:
+</p>
+
+<ol class="org-ol">
+<li>consensus: All agents have a common opinion <img src="ltxpng/statusreport_steger_generations_aa724a9f813c1475b3f2c99ad12690b6bdc55cd1.png" alt="$o_i=c\in[0,1]\,\forall
+   i\in[1,N]$" />. The age is uniformly distributed. This setup enables us
+to determine the timescale after which a consensus is lost due to
+replacement of old agents with new agents having a uniform opinion
+distribution.
+</li>
+
+<li>uniform field: The opinions are uniformly distributed, and so are the
+ages. This setup serves to determine the criteria for consensus
+finding.
+</li>
+</ol>
+
+<p>
+I introduce a social distance <img src="ltxpng/statusreport_steger_generations_997ff279b9bcf253d8214ac4f024b9d7fd891817.png" alt="$d$" /> between two agents encompassing
+opinions <img src="ltxpng/statusreport_steger_generations_38891f64b68a211744fd511310b4a0ce4cc99122.png" alt="$o_i$" />, physical positions <img src="ltxpng/statusreport_steger_generations_90c48580899af19274f24d5f9e2b4a356f6264be.png" alt="$x_i$" /> (2D on a lattice, or 3
+dimensional, or any appropriate social distance), age <img src="ltxpng/statusreport_steger_generations_2eb7e9676e8866e4949ec0953c964a00881456fd.png" alt="$a_i$" />. In each
+timestep, two random agents meet. They interact based on two possible
+rules:
+</p>
+
+<ol class="org-ol">
+<li>if the distance between them is smaller than a parameter
+   <img src="ltxpng/statusreport_steger_generations_ecebc360b43895c419714bc872f40941da76d0ef.png" alt="$\varepsilon$" /> with a strength parameter <img src="ltxpng/statusreport_steger_generations_6a95bc14a392a15f7fc108b0bb8b625a457f7cdd.png" alt="$\zeta$" />.
+</li>
+
+<li>always, but the strength parameter is decreasing with increasing
+distance: <img src="ltxpng/statusreport_steger_generations_65f23fcea90874de45736d52045da7d789f2dd97.png" alt="$\zeta=\zeta_0/g$" />.
+</li>
+</ol>
+
+<p>
+The interaction is based on the bounded confidence model
+</p>
+
+<p>
+<img src="ltxpng/statusreport_steger_generations_825fd5119281412241cfae4adade1a735f965449.png" alt="$o_i(t+1) = o_i(t)+\zeta*(o_j(t)-o_i(t))$" />
+</p>
+
+<p>
+<img src="ltxpng/statusreport_steger_generations_dc86338b07fdc6110f6e961342394a6cf9bd6d91.png" alt="$o_j(t+1) = o_j(t)+\zeta*(o_i(t)-o_j(t))$" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Preliminary Result</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+For the uniform field, and <img src="ltxpng/statusreport_steger_generations_be6b7b7b0b1f4617a53a64444021fcc9c2c83e67.png" alt="$\zeta=0.5$" /> with the distance-dependent
+interaction rule, I get the evolution shown in the figure. We can see the
+initial convergence, and the appearance of new agents with time
+(vertical lines mark births). A second "opinion peak" is forming at
+timestep 800, with mostly young agents, but some old ones as well.
+</p>
+
+
+<div class="figure">
+<p><img src="file:///home/psteger/abm14/generations/generations.png" alt="generations" width="50%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Further Investigations</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+I will
+</p>
+<ul class="org-ul">
+<li>develop a metric to determine the number of concurrent stable opinions;
+</li>
+<li>plot the timescale between new opinions as a function of mean lifetime of
+the agents divided by the frequency of new births;
+</li>
+<li>run a simulation starting from a consesus and compare it with the
+analytic treatment, which showed that the first measurable
+deflection would occur after half the lifetime of the initial agents.
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Pascal Steger</p>
+<p class="date">Created: 2014-04-30 Wed 17:00</p>
+<p class="creator"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 24.3.1 (<a href="http://orgmode.org">Org</a> mode 8.2.5h)</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
