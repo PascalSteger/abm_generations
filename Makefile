@@ -1,7 +1,7 @@
 # makefile for latex files
 
-# choose compiler 
-CC = pdflatex 
+# choose compiler
+CC = pdflatex
 CCTEST = pdflatex -draftmode
 
 # source files ( no .tex extension!!!)
@@ -41,12 +41,12 @@ pdf:	tex
 #	ps2pdf -dPDFsettings=/prepress $(SRC).ps
 
 # prepare images for inclusion via eps
-eps:	
+eps:
 	for i in fig/*.png; do echo $i; done
 
 # rm the tex crappy files and other twiggle files
 clean:
-	rm -rf *.aux *.dvi *.log *.toc *.lof *.lot *.blg *.bbl *.end *~
+	rm -rf *.aux *.dvi *.log *.toc *.lof *.lot *.blg *.bbl *.end *~ *.out
 
 # rm ps and pdf files as well
 tidy: clean

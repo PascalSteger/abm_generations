@@ -1,8 +1,8 @@
-\documentclass[useAMS,usenatbib]{mn2e}
+\documentclass[useAMS,usenatbib]{templates/mn2e}
 %\documentclass[a4paper,15pt]{article}
 %\documentclass[a4paper,10pt]{article}
 %\usepackage{aas_macros}
-\usepackage{myaasmacros}
+\usepackage{templates/myaasmacros}
 \usepackage{graphicx}
 \usepackage{color}
 \usepackage{amsmath}
@@ -14,7 +14,7 @@
 %\bibliographystyle{plain}
 %\bibliographystyle{apalike}
 %\bibliographystyle{mn2e}
-%\input{template_steger/header.tex}
+%\input{templates/header.tex}
 
 \input{definitions.tex}
 \title[Generations in Bounded Confidence]{Generations in the Bounded Confidence Model}
@@ -79,7 +79,7 @@ $o_i$ and an age $a_i$.
 Initial conditions are set such that the opinions are uniformly
 distributed. The creation times of the agents are also unfiormly
 distributed over the span $[-a_{\rm max},0]$, where $a_{\rm max}$ is the maximum lifetime
-of an agent. 
+of an agent.
 
 We introduce a distance $d$ between two agents measured with a metric
 
@@ -95,7 +95,7 @@ with opinions $o_i$, age $a_i$, and fudge
 parameters $\alpha, \beta$. They determine which part of the social distance is
 considered: Only difference in opinions, only difference in age, or
 both. For sake of simplicity, I restrict myself to distance in the
-opinion space, $\alpha=1, \beta=0$. 
+opinion space, $\alpha=1, \beta=0$.
 
 In each timestep, two random
 agents meet. They interact with interaction strength
@@ -184,7 +184,7 @@ and a remaining fraction
 
 To keep things simple, I assume this subtracted fraction to be replaced by newly
 created agents. These agents do not have a preset opinion, and thus
-sample uniformly from the available opinion space. 
+sample uniformly from the available opinion space.
 
 When new agents are randomly introduced and start to interact with an
 opinion group, the consensus value will be corrected in the direction
@@ -202,7 +202,7 @@ generally features a high spread in opinions and would never get
 changed above that level.
 
 To first order, the summed distribution of (remaining agents with fixed opinion)+(new
-agents with random opinions in $[0,1]$) will 
+agents with random opinions in $[0,1]$) will
 feel significant influence from the new agents as soon as their
 integrated opinion is of order of the consensus integral, and thus
 after half the lifetime, $T=a_{\rm max}/2$. This neglects any temporal
@@ -328,7 +328,7 @@ analytically derived approximation for the generation duration lies
 close-by, at 45. I get time-spans of the same order of
 magnitude, with the split stemming from discreteness effects: If by
 chance a group is detected to be disrupted as the number of agents
-drops below the critical group detection limit, the maximum timescale 
+drops below the critical group detection limit, the maximum timescale
 is shortened. With only two groups over a total of 8 agent
 lifetimes, this does not give enough statistics to reject the analytic
 hypothesis derived under the assumption of steady state.
