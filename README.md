@@ -7,6 +7,8 @@ How long does it take for an established opinion to change completely? -- About 
 - generations.py contains the code to reproduce the figures
 - talk_generations.pdf contains slides for a talk on the subject
 
+You will need python3, matplotlib, pdflatex, and possibly doxygen installed.
+
 Have fun!
 
 Pascal
